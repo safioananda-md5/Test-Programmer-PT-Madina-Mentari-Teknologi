@@ -71,3 +71,14 @@ body {
     margin: 0;
     border-radius: 5px;
 }
+
+.login-siswa {
+    text-decoration: none;
+    color: rgb(90, 96, 255);
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.login-siswa:hover {
+    text-decoration: underline;
+}

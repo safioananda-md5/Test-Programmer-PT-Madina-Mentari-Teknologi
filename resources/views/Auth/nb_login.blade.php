@@ -26,19 +26,22 @@
         @endif
         <div class="input-group">
             <label for="username">Username</label>
-            <input type="text" class="form-input" name="username" id="username" placeholder="Username">
+            <input type="text" class="form-input" name="username" id="username" placeholder="Username"
+                value="{{ old('username') }}">
             @error('username')
                 <small style="color: red">{{ $message }}</small>
             @enderror
         </div>
         <div class="input-group">
             <label for="password">Password</label>
-            <input type="password" class="form-input" name="password" id="password" placeholder="Password">
+            <input type="password" class="form-input" name="password" id="password" placeholder="Password"
+                value="{{ old('password') }}">
             @error('password')
                 <small style="color: red">{{ $message }}</small>
             @enderror
         </div>
         <button type="submit" class="btn">LOGIN</button>
+        <a href="" class="login-siswa">Login sebagai siswa?</a>
     </form>
 </body>
 

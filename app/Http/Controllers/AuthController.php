@@ -15,21 +15,21 @@ class AuthController extends Controller
         if (!session()->get('_login')) {
             return view('Auth.nb_login');
         } else {
-            return redirect()->route('employee.index');
+            return redirect()->route('dashboard.index');
         }
     }
 
     public function NB_login_post(Request $request)
     {
-        try {
-            $request->validate([
-                'username' => 'required',
-                'password' => 'required',
-            ], [
-                'username.required' => 'Username wajib diisi.',
-                'password.required' => 'Password wajib diisi.',
-            ]);
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ], [
+            'username.required' => 'Username wajib diisi.',
+            'password.required' => 'Password wajib diisi.',
+        ]);
 
+        try {
             // Manual
             $User = User::where('username', $request->username)->first();
 
@@ -45,7 +45,7 @@ class AuthController extends Controller
                         ]
                     ]);
                     // dd($request->session()->get('_login'));
-                    return redirect()->route('employee.index');
+                    return redirect()->route('dashboard.index');
                 } else {
                     throw new Exception('Kredensial Akun Tidak Valid!');
                 }
