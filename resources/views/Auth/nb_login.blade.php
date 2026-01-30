@@ -18,7 +18,7 @@
 <body>
     <form action="{{ route('no-bootstrap.post.login') }}" class="form-login" method="POST">
         @csrf
-        <h3>LOGIN</h3>
+        <h3>LOGIN KARYAWAN</h3>
         @if (session('_Throw'))
             <div class="alert">
                 <p>{{ session('_Throw') }}</p>

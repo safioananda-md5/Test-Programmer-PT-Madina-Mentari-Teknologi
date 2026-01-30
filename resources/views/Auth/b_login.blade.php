@@ -42,7 +42,7 @@
             <div class="card-header border-bottom-0 bg-transparent">
                 <div class="d-flex flex-column text-center">
                     <p class="m-0 p-0">ܓܘܙܕܩܐ</p>
-                    <h5>Login Siswa</h5>
+                    <h5>LOGIN SISWA</h5>
                 </div>
             </div>
             <div class="card-body">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="d-flex flex-column align-items-center text-center">
                         <button type="submit" class="btn w-50" style="background: #1A3263; color:#fff">Login</button>
-                        <a class="text-decoration-none link-secondary" style="font-size: 14px"
+                        <a class="text-decoration-none link-primary mt-3" style="font-size: 14px"
                             href="{{ route('no-bootstrap.login') }}">Login
                             sebagai
                             karyawan?</a>
