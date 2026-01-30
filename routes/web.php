@@ -15,17 +15,22 @@ Route::group(['prefix' => '/no-bootstrap', 'as' => 'no-bootstrap.'], function ()
 });
 
 Route::group(['prefix' => '/bootstrap', 'as' => 'bootstrap.'], function () {
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/login', [AuthController::class, 'B_login'])->name('login');
+    Route::post('/login', [AuthController::class, 'B_login_post'])->name('post.login');
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['login'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-    Route::get('/add-employee', [EmployeeController::class, 'add'])->name('employee.add');
-    Route::post('/store-employee', [EmployeeController::class, 'store'])->name('employee.store');
-    Route::get('/edit-employee/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
-    Route::put('/update-employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
-    Route::delete('/delete-employee', [EmployeeController::class, 'delete'])->name('employee.delete');
+    Route::middleware(['role:student'])->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    });
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
+        Route::get('/add-employee', [EmployeeController::class, 'add'])->name('employee.add');
+        Route::post('/store-employee', [EmployeeController::class, 'store'])->name('employee.store');
+        Route::get('/edit-employee/{id}', [EmployeeController::class, 'edit'])->name('employee.edit');
+        Route::put('/update-employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+        Route::delete('/delete-employee', [EmployeeController::class, 'delete'])->name('employee.delete');
+    });
 });

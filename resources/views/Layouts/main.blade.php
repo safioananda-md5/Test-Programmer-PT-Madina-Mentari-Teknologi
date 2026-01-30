@@ -69,6 +69,9 @@
         }
     </style>
     @yield('css')
+    @php
+        $Auth = session()->get('_login');
+    @endphp
 </head>
 
 <body>
@@ -78,7 +81,11 @@
                 <a class="navbar-brand" href="#">
                     <div class="d-flex flex-column text-center">
                         <p class="m-0 p-0 text-light">ܓܘܙܕܩܐ</p>
-                        <small class="text-light" style="font-size: 12px">Employee Management</small>
+                        @if ($Auth['role'] == 'admin')
+                            <small class="text-light" style="font-size: 12px">Employee Management</small>
+                        @else
+                            <small class="text-light" style="font-size: 12px">Billing Management</small>
+                        @endif
                     </div>
                 </a>
                 <button class="navbar-toggler border-light" type="button" data-bs-toggle="collapse"
@@ -88,13 +95,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item navH">
-                            <a class="nav-link text-light" aria-current="page"
-                                href="{{ route('dashboard.index') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item navH">
-                            <a class="nav-link text-light" href="{{ route('employee.index') }}">Employee</a>
-                        </li>
+                        @if ($Auth['role'] == 'student')
+                            <li class="nav-item navH">
+                                <a class="nav-link text-light" aria-current="page"
+                                    href="{{ route('dashboard.index') }}">Dashboard</a>
+                            </li>
+                        @endif
+                        @if ($Auth['role'] == 'admin')
+                            <li class="nav-item navH">
+                                <a class="nav-link text-light" href="{{ route('employee.index') }}">Employee</a>
+                            </li>
+                        @endif
                         <li class="nav-item navH">
                             <a class="nav-link text-light d-block d-lg-none" href="#">
                                 Logout
@@ -106,7 +117,7 @@
                             <li class="nav-item dropstart">
                                 <a class="nav-link dropdown-toggle text-light" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    Settings <i class="fa-regular fa-circle-user"></i>
+                                    {{ $Auth['name'] }} <i class="fa-regular fa-circle-user"></i>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>

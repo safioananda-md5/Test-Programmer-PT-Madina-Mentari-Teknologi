@@ -41,7 +41,7 @@
             @enderror
         </div>
         <button type="submit" class="btn">LOGIN</button>
-        <a href="" class="login-siswa">Login sebagai siswa?</a>
+        <a href="{{ route('bootstrap.login') }}" class="login-siswa">Login sebagai siswa?</a>
     </form>
 </body>
 
