@@ -45,6 +45,10 @@ class AuthController extends Controller
             $User = User::where('username', $request->username)->first();
 
             if ($User) {
+                if ($User->role == 'employee') {
+                    return redirect(route('logout'));
+                }
+
                 if (Hash::check($request->password, $User->password)) {
                     session([
                         '_login' => [

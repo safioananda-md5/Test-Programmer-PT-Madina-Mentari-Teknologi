@@ -88,6 +88,7 @@
 @section('scripts')
     <script>
         $('#employeeTable').DataTable({
+            scrollX: true,
             columnDefs: [{
                 targets: [4],
                 orderable: false,

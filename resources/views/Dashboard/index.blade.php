@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="card border-warning custom-card">
+                    <div class="card border-warning custom-card mt-0 mt-lg-0 mt-3">
                         <div class="card-body">
                             <p class="card-text">Total Potongan</p>
                             <h5 class="card-title">{{ 'Rp ' . number_format($TotalBill['0']['POTONGAN'], 0, ',', '.') }}
@@ -74,6 +74,8 @@
 @endsection
 @section('scripts')
     <script>
-        $('#billingTable').DataTable();
+        $('#billingTable').DataTable({
+            scrollX: true
+        });
     </script>
 @endsection

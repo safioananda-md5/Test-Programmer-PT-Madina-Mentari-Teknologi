@@ -20,10 +20,11 @@
         </div>
         <div class="row px-3">
             @if ($edit)
-                <form action="{{ route('employee.update', Crypt::encrypt($employee->id)) }}" method="POST">
+                <form action="{{ route('employee.update', Crypt::encrypt($employee->id)) }}" method="POST"
+                    id="employeeForm">
                     @method('PUT')
                 @else
-                    <form action="{{ route('employee.store') }}" method="POST">
+                    <form action="{{ route('employee.store') }}" method="POST" id="employeeForm">
             @endif
             @csrf
             <div class="d-flex flex-column border-bottom pb-3 mb-3">
@@ -100,5 +101,12 @@
     <script>
         flatpickr.localize(flatpickr.l10ns.id);
         $("#date").flatpickr();
+
+        $('button[type="submit"]').on('click', function(e) {
+            e.preventDefault();
+            const employee = $('#employeeForm');
+            $(this).text('Memproses...').prop('disabled', true);
+            employee.submit();
+        });
     </script>
 @endsection

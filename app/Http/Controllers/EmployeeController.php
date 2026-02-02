@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Pest\Mutate\Mutators\String\NotEmptyStringToEmpty;
 
 class EmployeeController extends Controller
 {
@@ -17,6 +19,7 @@ class EmployeeController extends Controller
     {
         $employees = User::where('role', 'employee')->get();
         return view('Employee.index', compact(['employees']));
+        // return redirect(route('logout'));
     }
 
     public function add()
@@ -36,6 +39,7 @@ class EmployeeController extends Controller
                     'date' => 'required',
                     'newusername' => 'required|max:150',
                     'newpassword' => 'required',
+                    'newusername' => 'required|max:150|unique:users,username',
                 ],
                 [
                     'name.required' => 'Nama karyawan wajib diisi.',
@@ -48,6 +52,7 @@ class EmployeeController extends Controller
                     'newusername.required' => 'Username wajib diisi.',
                     'newusername.max' => 'Username maksimal 150 karakter',
                     'newpassword' => 'Password wajib diisi.',
+                    'newusername.unique' => 'Username telah digunakan.',
                 ]
             );
 
@@ -94,7 +99,6 @@ class EmployeeController extends Controller
                     'phone' => 'required|max:20',
                     'email' => 'required|max:150',
                     'date' => 'required',
-                    'newusername' => 'required|max:150',
                 ],
                 [
                     'name.required' => 'Nama karyawan wajib diisi.',
@@ -111,6 +115,7 @@ class EmployeeController extends Controller
 
             DB::beginTransaction();
             $user = User::find($ID);
+            $usernot = User::where('id', '!=', $ID)->get();
 
             if (isset($request->name)) {
                 $user->update([
@@ -133,9 +138,15 @@ class EmployeeController extends Controller
                 ]);
             }
             if (isset($request->newusername)) {
-                $user->update([
-                    'username' => $request->newusername
-                ]);
+                $usernameexist = $usernot->where('username', $request->newusername)->first();
+                // dd($usernameexist);
+                if (!$usernameexist) {
+                    $user->update([
+                        'username' => $request->newusername
+                    ]);
+                } else {
+                    throw new Exception('Username telah digunakan.');
+                }
             }
             if (isset($request->newpassword)) {
                 $user->update([

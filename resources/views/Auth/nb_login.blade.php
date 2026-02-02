@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <form action="{{ route('no-bootstrap.post.login') }}" class="form-login" method="POST">
+    <form action="{{ route('no-bootstrap.post.login') }}" class="form-login" method="POST" id="loginForm">
         @csrf
         <h3>LOGIN KARYAWAN</h3>
         @if (session('_Throw'))
@@ -43,6 +43,18 @@
         <button type="submit" class="btn">LOGIN</button>
         <a href="{{ route('bootstrap.login') }}" class="login-siswa">Login sebagai siswa?</a>
     </form>
+
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"
+        integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous"></script>
+
+    <script>
+        $('button[type="submit"]').on('click', function(e) {
+            e.preventDefault();
+            const login = $('#loginForm');
+            $(this).text('Memproses...').prop('disabled', true);
+            login.submit();
+        });
+    </script>
 </body>
 
 </html>
